@@ -26,7 +26,7 @@ class wrapper(object):
     ##########
     def __init__(self, models, extra_data={}, extra_name=''):
         """ wrapper_obj = ezgal.wrapper( [model_list], extra_data={}, extra_name='' )
-		
+
 		Initialize a wrapper object for handling multiple ezgal objects at once.  Model list
 		should be a list of ezgal objects or filenames of ezgal compatible model files.
 		See wrapper.add_model() for meaning of extra_data and extra_name parameters """
@@ -52,7 +52,7 @@ class wrapper(object):
             # break up extra data to pass one set at a time to add_model()
             my_extra_data = {}
             if extra_data:
-                for (key, val) in extra_data.iteritems():
+                for (key, val) in extra_data.items():
                     my_extra_data[key] = val[i]
 
             self.add_model(model, my_extra_data)
@@ -159,10 +159,10 @@ class wrapper(object):
     ###############
     def add_model(self, model, extra_data={}, extra_name=''):
         """ wrapper_obj.add_model( model )
-		
+
 		:param model: A filename/object to add to the wrapper object
 		:type model: filename, EzGal object
-		
+
 		Add an ezgal object to the wrapper object.  ``model`` can be an ezgal model object or the filename of an ezgal compatible model file."""
 
         # load the model if it is a filename
@@ -241,7 +241,7 @@ class wrapper(object):
                         return_list=False,
                         require_length=False):
         """ wrapper_obj._normalize_data( extra_data, extra_name )
-		
+
 		The wrapper object wants all extra data to be a dictionary of scalar or lists. """
 
         # if the extra data is already a dictionary then there is nothing to do
@@ -282,13 +282,13 @@ class wrapper(object):
     #######################
     def get_meta_data_set(self):
         """ wrapper_obj.get_meta_data_set()
-		
+
 		Returns a meta data dictionary containing 'Mixed' where models have different values,
 		and the common value otherwise """
 
         new_data = {}
         # loop through each key
-        for (key, vals) in self.meta_data.iteritems():
+        for (key, vals) in self.meta_data.items():
 
             # if there is only one value for all models then return that value
             # otherwise return 'Mixed'
@@ -306,7 +306,7 @@ class wrapper(object):
     ##########
     def find(self, keys, vals):
         """ model = wrapper_obj.find( keys, vals, silent_fail=False )
-		
+
 		Returns a boolean mask designating which models have
 		the given meta values for the given meta keys.
 		Keys and vals can be lists of the same size or scalar values. """
@@ -336,11 +336,11 @@ class wrapper(object):
     ###############
     def get_models(self, keys, vals, silent_fail=False):
         """ new_wrapper = wrapper_obj.get_models( keys, vals, return_wrapper=True, silent_fail=False )
-		
+
 		Returns a new wrapper object containing the models that have
 		the given meta values for the given meta keys.
 		Keys and vals can be lists of the same size or scalar values.
-		
+
 		If nothing matches an error will be raised unless silent_fail == True, in which
 		case an empty list will be returned. """
 
@@ -358,18 +358,18 @@ class wrapper(object):
     #############
     def argsort(self, key):
         """ sort_indexes = wrapper_obj.argsort( key )
-		
+
 		:param key: The name of a meta keyword by which to sort
 		:type key: string
 		:returns: List of indexes for soring wrapper object
 		:rtype: list
-		
+
 		:Example:
 			>>> import ezgal
 			>>> wrapper = ezgal.wrapper( ['bc03_ssp_z_0.02_chab.model','bc03_ssp_z_0.008_chab.model'] )
 			>>> print wrapper.argsort( 'met' )
 			[1 0]
-		
+
 		Return a numpy array of indexes to sort the models in the wrapper object. Sorting is done numerically by values in meta data keyword ``key``. Data in given meta key must contain only numeric data. """
 
         if not self.meta_data.has_key(key):
@@ -389,7 +389,7 @@ class wrapper(object):
     ##########
     def sort(self, key):
         """ sorted_wrapper = wrapper_obj.sort( key )
-		
+
 		Returns a new wrapper object with models sorted numerically according to values in
 		meta data keyword `key` """
 
@@ -400,11 +400,11 @@ class wrapper(object):
     #################
     def interpolate(self, key, values, return_wrapper=True):
         """ wrapper_obj.interpolate( key, values, return_wrapper=True ):
-		
+
 		Interpolate among stored models and return new EzGal objects at interpolated values.
 		Pass a meta key which tells which values to interpolate between, and a list of
 		values that you want the new models to be interpolated at.
-		
+
 		 If return_wrapper == True then it will return the models as an ezgal.wrapper object.
 		 Otherwise, it will return them as a list of models, or as a single model (if a scalar value is passed in `values`). """
 
@@ -506,7 +506,7 @@ class wrapper(object):
     #####################
     def set_vega_output(self):
         """ wrapper.set_vega_output()
-		
+
 		Calls model.set_vega_output() on all loaded models. """
 
         for model in self:
@@ -518,7 +518,7 @@ class wrapper(object):
     ###################
     def set_ab_output(self):
         """ wrapper.set_ab_output()
-		
+
 		Calls model.set_ab_output() on all loaded models. """
 
         for model in self:
@@ -611,7 +611,7 @@ class wrapper(object):
                           ab=None,
                           vega=None):
         """ wrapper.get_absolute_mags( zf, filters=None, zs=None, normalize=True, ab=None, vega=None )
-		
+
 		:param zf: The formation redshift
 		:param filters: List of filters
 		:param zs: List of zs
@@ -626,7 +626,7 @@ class wrapper(object):
 		:type vega: bool
 		:returns: Data cube with absolute magnitudes
 		:rtype: array
-		
+
 		:Example:
 			>>> import ezgal
 			>>> wrapper = ezgal.wrapper( ['bc03_ssp_z_0.02_chab.model','bc03_ssp_z_0.008_chab.model'] )
@@ -642,9 +642,9 @@ class wrapper(object):
 			  [ 5.75053844  6.21216407  6.64700271]
 			  [ 4.73228287  5.13875043  5.59090961]
 			  [ 4.55125868  4.95278808  5.40624718]]]
-		
+
 		Calls :meth:`ezgal.ezgal.get_absolute_mags` on all stored model objects and returns results in a data cube of shape ``(len( wrapper ),len( zs ),len( nfilters ))``
-		
+
 		.. seealso::
 			:meth:`ezgal.ezgal.get_absolute_mags`
 		.. warning::
@@ -670,9 +670,9 @@ class wrapper(object):
                           ab=None,
                           vega=None):
         """ wrapper.get_apparent_mags( zf, filters=None, zs=None, normalize=True, ab=None, vega=None )
-		
+
 		Same as :meth:`ezgal.wrapper.get_absolute_mags` but calls :meth:`ezgal.ezgal.get_apparent_mags`.
-		
+
 		.. seealso::
 			:meth:`ezgal.wrapper.get_absolute_mags`, :meth:`ezgal.ezgal.get_apparent_mags`
 		"""
@@ -690,9 +690,9 @@ class wrapper(object):
     #########################
     def get_distance_moduli(self, zs=None, nfilters=None):
         """ wrapper.get_distance_moduli( zs=None, nfilters=None )
-		
+
 		Same as :meth:`ezgal.wrapper.get_absolute_mags` but calls :meth:`ezgal.ezgal.get_distance_moduli`.
-		
+
 		.. seealso::
 			:meth:`ezgal.wrapper.get_absolute_mags`, :meth:`ezgal.ezgal.get_distance_moduli`
 		"""
@@ -714,9 +714,9 @@ class wrapper(object):
     ###################
     def get_kcorrects(self, zf, filters=None, zs=None):
         """ wrapper.get_kcorrects( zf, filters=None, zs=None )
-		
+
 		Same as :meth:`ezgal.wrapper.get_absolute_mags` but calls :meth:`ezgal.ezgal.get_kcorrects`.
-		
+
 		.. seealso::
 			:meth:`ezgal.wrapper.get_absolute_mags`, :meth:`ezgal.ezgal.get_kcorrects`
 		"""
@@ -732,9 +732,9 @@ class wrapper(object):
     ###################
     def get_ecorrects(self, zf, filters=None, zs=None):
         """ wrapper.get_ecorrects( zf, filters=None, zs=None )
-		
+
 		Same as :meth:`ezgal.wrapper.get_absolute_mags` but calls :meth:`ezgal.ezgal.get_ecorrects`.
-		
+
 		.. seealso::
 			:meth:`ezgal.wrapper.get_absolute_mags`, :meth:`ezgal.ezgal.get_ecorrects`
 		"""
@@ -750,9 +750,9 @@ class wrapper(object):
     ####################
     def get_ekcorrects(self, zf, filters=None, zs=None):
         """ wrapper.get_ekcorrects( zf, filters=None, zs=None )
-		
+
 		Same as :meth:`ezgal.wrapper.get_absolute_mags` but calls :meth:`ezgal.ezgal.get_ekcorrects`.
-		
+
 		.. seealso::
 			:meth:`ezgal.wrapper.get_absolute_mags`, :meth:`ezgal.ezgal.get_ekcorrects`
 		"""
@@ -768,9 +768,9 @@ class wrapper(object):
     #########################
     def get_rest_ml_ratios(self, zf, filters=None, zs=None):
         """ wrapper.get_rest_ml_ratios( zf, filters=None, zs=None )
-		
+
 		Same as :meth:`ezgal.wrapper.get_absolute_mags` but calls :meth:`ezgal.ezgal.get_rest_ml_ratios`.
-		
+
 		.. seealso::
 			:meth:`ezgal.wrapper.get_absolute_mags`, :meth:`ezgal.ezgal.get_rest_ml_ratios`
 		"""
@@ -782,9 +782,9 @@ class wrapper(object):
     #############################
     def get_observed_ml_ratios(self, zf, filters=None, zs=None):
         """ wrapper.get_observed_ml_ratios( zf, filters=None, zs=None )
-		
+
 		Same as :meth:`ezgal.wrapper.get_absolute_mags` but calls :meth:`ezgal.ezgal.get_observed_ml_ratios`.
-		
+
 		.. seealso::
 			:meth:`ezgal.wrapper.get_absolute_mags`, :meth:`ezgal.ezgal.get_observed_ml_ratios`
 		"""
@@ -801,9 +801,9 @@ class wrapper(object):
                                 ab=None,
                                 vega=None):
         """ wrapper.get_observed_ml_ratios( zf, filters=None, zs=None, ab=None, vega=None )
-		
+
 		Same as :meth:`ezgal.wrapper.get_absolute_mags` but calls :meth:`ezgal.ezgal.get_solar_observed_mags`.
-		
+
 		.. seealso::
 			:meth:`ezgal.wrapper.get_absolute_mags`, :meth:`ezgal.ezgal.get_solar_observed_mags`
 		"""
@@ -826,9 +826,9 @@ class wrapper(object):
                                    ab=None,
                                    vega=None):
         """ wrapper.get_observed_absolute_mags( zf, filters=None, zs=None, normalize=True, ab=None, vega=None )
-		
+
 		Same as :meth:`ezgal.wrapper.get_absolute_mags` but calls :meth:`ezgal.ezgal.get_observed_absolute_mags`.
-		
+
 		.. seealso::
 			:meth:`ezgal.wrapper.get_absolute_mags`, :meth:`ezgal.ezgal.get_observed_absolute_mags`
 		"""
@@ -845,9 +845,9 @@ class wrapper(object):
     ################
     def get_masses(self, zf, zs=None, nfilters=None):
         """ wrapper.get_masses( zf, zs=zs, nfilters=None )
-		
+
 		Same as :meth:`ezgal.wrapper.get_absolute_mags` but calls :meth:`ezgal.ezgal.get_masses`.
-		
+
 		.. seealso::
 			:meth:`ezgal.wrapper.get_absolute_mags`, :meth:`ezgal.ezgal.get_masses`
 		"""
@@ -867,14 +867,14 @@ class wrapper(object):
     ############
     def get_zs(self, z):
         """ zs = wrapper.get_zs( z )
-		
+
 		:param z: Upper limit for list of redshifts
 		:type z: int, float
 		:returns: Array with list of redshifts
 		:rtype: array
-		
+
 		Shortcut for wrapper[0].get_zs( z )
-		
+
 		.. seealso::
 			:meth:`ezgal.ezgal.get_zs`
 		"""
@@ -886,7 +886,7 @@ class wrapper(object):
     #############
     def get_age(self, z1, z2, units='gyrs'):
         """ ages = wrapper.get_age( z1, z2, units='gyrs' )
-		
+
 		:param z1: The first redshift
 		:param z2: The second redshift
 		:param units: The units to return the time in
@@ -895,9 +895,9 @@ class wrapper(object):
 		:type units: str
 		:returns: Time between two redshifts
 		:rtype: int, float, list, array
-		
+
 		Shortcut for wrapper[0].get_age( z1, z2, units=units )
-		
+
 		.. seealso::
 			:meth:`ezgal.ezgal.get_age`
 		"""
@@ -909,14 +909,14 @@ class wrapper(object):
     #######################
     def get_normalization(self, zf, flux=False):
         """ normalizations = wrapper.get_normalization( zf, flux=False )
-		
+
 		:param zf: The formation redshift to assume
 		:param flux: Wheter or not to return a multiplicative factor
 		:type zf: int, float
 		:type flux: bool
 		:returns: The normalizations
 		:rtype: array
-		
+
 		:Example:
 			>>> import ezgal
 			>>> wrapper = ezgal.wrapper( ['bc03_ssp_z_0.02_chab.model','bc03_ssp_z_0.008_chab.model'] )
@@ -925,9 +925,9 @@ class wrapper(object):
 			array([-28.45662556, -28.5216577 ])
 			>>> wrapper.get_normalization( 3.0, flux=True )
 			array([  2.41351622e+11,   2.56249531e+11])
-		
+
 		Returns an array of size ``len( wrapper )`` containing the normalization for each model in the wrapper object.
-		
+
 		.. seealso::
 			:meth:`ezgal.ezgal.get_normalization`, :meth:`ezgal.wrapper.set_normalization`
 		"""
@@ -940,7 +940,7 @@ class wrapper(object):
     #######################
     def set_normalization(self, filter, z, mag, vega=False, apparent=False):
         """ wrapper.set_normalization( filter, z, mag, vega=False, apparent=False )
-		
+
 		:param filter: The normalization filter
 		:param z: The normalization redshift
 		:param mag: The normalization magnitude
@@ -952,9 +952,9 @@ class wrapper(object):
 		:type vega: bool
 		:type apparent: bool
 		:returns: None
-		
+
 		Calls :meth:`ezgal.ezgal.set_normalization` on all models loaded in the wrapper.
-		
+
 		.. seealso::
 			:meth:`ezgal.ezgal.set_normalization`, :meth:`ezgal.wrapper.get_normalization`
 		"""
