@@ -102,7 +102,7 @@ class wrapper(object):
 
         # index with string
         if type(key) == type(''):
-            if not self.meta_data.has_key(key):
+            if not key in self.meta_data.keys():
                 raise IndexError('Meta key %s does not exist!' % key)
             return np.asarray(self.meta_data[key])
 
@@ -321,7 +321,7 @@ class wrapper(object):
 
         # make sure the keys all exist
         for key in keys:
-            if not self.meta_data.has_key(key):
+            if not key in self.meta_data.keys():
                 raise ValueError("Meta data key %s does not exist!" % key)
 
         # now loop through keys/values and find things that don't match
@@ -372,7 +372,7 @@ class wrapper(object):
 
 		Return a numpy array of indexes to sort the models in the wrapper object. Sorting is done numerically by values in meta data keyword ``key``. Data in given meta key must contain only numeric data. """
 
-        if not self.meta_data.has_key(key):
+        if not key in self.meta_data.keys():
             raise ValueError('Meta data key %s does not exist!' % key)
 
         # is this numeric data?
@@ -414,7 +414,7 @@ class wrapper(object):
                 "Can't interpolate among the models because the models have different age/wavelength points in their SEDs!")
 
         # make sure the key actually exists in our meta data
-        if not self.meta_data.has_key(key):
+        if not key in self.meta_data.keys():
             raise ValueError(
                 "Can't interpolate by %s because that key wasn't found in the wrapper object's meta data!"
                 % key)
